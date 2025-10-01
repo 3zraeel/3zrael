@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3zrael</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/png" href="CheaT-Tracker.png">
+</head>
+<body>
+  <main class="content">
+    <!-- Logo Section -->
+    <section class="logo-area">
+      <pre class="logo-text">
+  _____   _____  ____       _      _____   _     
+ |___ /  |__  / |  _ \     / \    | ____| | |    
+   |_ \    / /  | |_) |   / _ \   |  _|   | |    
+  ___) |  / /_  |  _ <   / ___ \  | |___  | |___ 
+ |____/  /____| |_| \_\ /_/   \_\ |_____| |_____|
+      </pre>
+      <p class="logo-area-quote">
+          Welcome, Glad To Have u Here
+      </p>
+    </section>
+
+<!-- Info Section -->
+<section class="info-wrapper">
+  <div class="info">
+    <p class="green"> > YouTube: 
+      <a href="https://www.youtube.com/@Z-3zrael" class="youtube-link">Click Here To Watch</a>
+    </p>
+    <p class="white"> > TikTok: 
+      <a href="https://www.tiktok.com/@932131326042177546" class="tiktok-link">Click Here To Watch</a>
+    </p>
+    <p class="pink"> > Instagram: 
+      <a href="https://www.instagram.com/your_username" class="instagram-link">Click Here To Follow</a>
+    </p>
+    <p class="magenta"> > Discord: 
+      <a href="https://discord.gg/N7V9Ff3EED" class="discord-link">Click Here To Join The Server</a>
+    </p>
+  </div>
+</section>
+
+<!-- Music Play Section -->
+<section class="music-wrapper" 
+         style="display:flex;justify-content:center;align-items:flex-start;
+                height:10vh;text-align:center;padding-top:5vh;">
+  <div class="music-player" 
+       style="display:flex;flex-direction:column;align-items:center;
+              gap:8px;padding:16px;border-radius:12px;
+              background:rgba(252, 252, 252, 0);box-shadow:0 0 12px rgba(0,0,0,0.3);
+              font-family:sans-serif;font-size:14px;">
+
+    <button id="music-toggle" 
+            style="padding:6px 14px;font-size:14px;border:none;border-radius:8px;
+                   cursor:pointer;background:#d82828;color:#fff;">
+      ▶ Play
+    </button>
+
+    <div style="width:160px;">
+      <input id="seek" type="range" value="0" min="0" max="100" style="width:100%;"/>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#ccc;">
+        <span id="current-time">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
+    </div>
+  </div>
+
+  <audio id="bg-music" preload="metadata">
+    <source src="3zrael.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+</section>
+
+<script>
+  const audio = document.getElementById('bg-music');
+  const toggle = document.getElementById('music-toggle');
+  const seek = document.getElementById('seek');
+  const currentTimeEl = document.getElementById('current-time');
+  const durationEl = document.getElementById('duration');
+  const player = document.querySelector('.music-player');
+
+  function fmt(t){
+    if (isNaN(t)) return '0:00';
+    const m = Math.floor(t/60);
+    const s = Math.floor(t%60).toString().padStart(2,'0');
+    return `${m}:${s}`;
+  }
+
+  audio.addEventListener('loadedmetadata', () => {
+    durationEl.textContent = fmt(audio.duration);
+    seek.max = Math.floor(audio.duration);
+  });
+
+  toggle.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play().catch(()=>{});
+      toggle.textContent = '⏸ Pause';
+      player.classList.add('playing');          // مؤثر البلاير
+      document.body.classList.add('playing');   // مؤثر الشاشة
+    } else {
+      audio.pause();
+      toggle.textContent = '▶ Play';
+      player.classList.remove('playing');
+      document.body.classList.remove('playing');
+    }
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    seek.value = Math.floor(audio.currentTime);
+    currentTimeEl.textContent = fmt(audio.currentTime);
+  });
+
+  seek.addEventListener('input', () => {
+    audio.currentTime = seek.value;
+  });
+
+  audio.addEventListener('ended', () => {
+    toggle.textContent = '▶ Play';
+    seek.value = 0;
+    currentTimeEl.textContent = '0:00';
+    player.classList.remove('playing');
+    document.body.classList.remove('playing'); // رجّع الشاشة طبيعية
+  });
+</script>
+
+
+
+    <!-- Footer/Error Section -->
+    <footer class="error">
+    Honestly, i was Just bored one night & decided to put this site together nothing too serious, just a place to drop links etc.., & maybe a little style
+    </footer>
+  </main>
+</body>
+</html>
